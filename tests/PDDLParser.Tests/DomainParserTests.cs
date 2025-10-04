@@ -45,7 +45,7 @@ namespace AIInGames.Planning.PDDL.Tests
 
             Assert.That(result.Success, Is.True, "Parsing should succeed");
             Assert.That(result.Result, Is.Not.Null);
-            Assert.That(result.Result.Name, Is.EqualTo("blocksworld"));
+            Assert.That(result.Result!.Name, Is.EqualTo("blocksworld"));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace AIInGames.Planning.PDDL.Tests
             Assert.That(result.Success, Is.True);
             Assert.That(result.Result!.Predicates.Count, Is.EqualTo(5));
 
-            var onPredicate = result.Result.GetPredicate("on");
+            var onPredicate = result.Result!.GetPredicate("on");
             Assert.That(onPredicate, Is.Not.Null);
             Assert.That(onPredicate.Arity, Is.EqualTo(2));
         }
@@ -93,7 +93,7 @@ namespace AIInGames.Planning.PDDL.Tests
             Assert.That(result.Success, Is.True);
             Assert.That(result.Result!.Actions.Count, Is.EqualTo(1));
 
-            var pickupAction = result.Result.GetAction("pick-up");
+            var pickupAction = result.Result!.GetAction("pick-up");
             Assert.That(pickupAction, Is.Not.Null);
             Assert.That(pickupAction.Parameters.Count, Is.EqualTo(1));
         }
@@ -111,7 +111,7 @@ namespace AIInGames.Planning.PDDL.Tests
             Assert.That(result.Success, Is.True);
             Assert.That(result.Result!.Types.Count, Is.EqualTo(4)); // 3 custom types + 'object' root type
 
-            var truckType = result.Result.GetType("truck");
+            var truckType = result.Result!.GetType("truck");
             Assert.That(truckType, Is.Not.Null);
         }
 

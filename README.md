@@ -74,6 +74,13 @@ The PDDL grammar is based on work by Zeyn Saigol (School of Computer Science, Un
 
 Testing uses NUnit (MIT License, Copyright 2021 Charlie Poole, Rob Prouse).
 
+## Author
+
+Created by Marek Marchlewicz
+Published by [AI In Games](https://aiingames.com)
+
+Contact: aiingames@hotmail.com or [open an issue](https://github.com/AI-In-Games/PDDL-Parser/issues)
+
 ## Contributing
 
 Pull requests are welcome. Please include tests for new features.

@@ -50,7 +50,7 @@ namespace AIInGames.Planning.PDDL.Tests
 
             Assert.That(result.Success, Is.True, "Parsing should succeed");
             Assert.That(result.Result, Is.Not.Null);
-            Assert.That(result.Result.Name, Is.EqualTo("blocks-4"));
+            Assert.That(result.Result!.Name, Is.EqualTo("blocks-4"));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace AIInGames.Planning.PDDL.Tests
             Assert.That(result.Success, Is.True);
             Assert.That(result.Result!.Objects.Count, Is.EqualTo(4));
 
-            var objA = result.Result.GetObject("a");
+            var objA = result.Result!.GetObject("a");
             Assert.That(objA, Is.Not.Null);
             Assert.That(objA.Name, Is.EqualTo("a"));
         }
@@ -97,7 +97,7 @@ namespace AIInGames.Planning.PDDL.Tests
 
             Assert.That(result.Success, Is.True);
             Assert.That(result.Result!.InitialState, Is.Not.Empty);
-            Assert.That(result.Result.InitialState.Count, Is.EqualTo(9));
+            Assert.That(result.Result!.InitialState.Count, Is.EqualTo(9));
         }
 
         [Test]
@@ -112,8 +112,8 @@ namespace AIInGames.Planning.PDDL.Tests
 
             Assert.That(result.Success, Is.True);
             Assert.That(result.Result!.Goal, Is.Not.Null);
-            Assert.That(result.Result.Goal.Type, Is.EqualTo(ConditionType.And));
-            Assert.That(result.Result.Goal.Children.Count, Is.EqualTo(3));
+            Assert.That(result.Result!.Goal.Type, Is.EqualTo(ConditionType.And));
+            Assert.That(result.Result!.Goal.Children.Count, Is.EqualTo(3));
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace AIInGames.Planning.PDDL.Tests
             Assert.That(truck, Is.Not.Null);
             Assert.That(truck.Type?.Name, Is.EqualTo("truck"));
 
-            var package1 = result.Result.GetObject("package1");
+            var package1 = result.Result!.GetObject("package1");
             Assert.That(package1, Is.Not.Null);
             Assert.That(package1.Type?.Name, Is.EqualTo("package"));
         }

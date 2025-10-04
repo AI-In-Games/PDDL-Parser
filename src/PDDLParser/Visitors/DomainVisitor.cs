@@ -16,32 +16,32 @@ namespace AIInGames.Planning.PDDL.Visitors
             var name = context.name().GetText();
 
             var requirements = context.requireDef() != null
-                ? VisitRequireDef(context.requireDef())
+                ? ParseRequireDef(context.requireDef())
                 : new List<string>();
 
             var types = context.typesDef() != null
-                ? VisitTypesDef(context.typesDef())
+                ? ParseTypesDef(context.typesDef())
                 : new List<IType>();
 
             var predicates = context.predicatesDef() != null
-                ? VisitPredicatesDef(context.predicatesDef())
+                ? ParsePredicatesDef(context.predicatesDef())
                 : new List<IPredicate>();
 
             var actions = context.actionDef()
-                .Select(VisitActionDef)
+                .Select(ParseActionDef)
                 .ToList();
 
             return new Domain(name, requirements, types, predicates, actions);
         }
 
-        private List<string> VisitRequireDef(PddlParser.RequireDefContext context)
+        private List<string> ParseRequireDef(PddlParser.RequireDefContext context)
         {
             return context.requireKey()
                 .Select(rk => rk.GetText())
                 .ToList();
         }
 
-        private List<IType> VisitTypesDef(PddlParser.TypesDefContext context)
+        private List<IType> ParseTypesDef(PddlParser.TypesDefContext context)
         {
             // Initialize with 'object' as root type
             var objectType = new PDDLType("object", null);
@@ -82,10 +82,10 @@ namespace AIInGames.Planning.PDDL.Visitors
             return types;
         }
 
-        private List<IPredicate> VisitPredicatesDef(PddlParser.PredicatesDefContext context)
+        private List<IPredicate> ParsePredicatesDef(PddlParser.PredicatesDefContext context)
         {
             var predicates = context.atomicFormulaSkeleton()
-                .Select(VisitAtomicFormulaSkeleton)
+                .Select(ParseAtomicFormulaSkeleton)
                 .ToList();
 
             foreach (var pred in predicates)
@@ -96,24 +96,24 @@ namespace AIInGames.Planning.PDDL.Visitors
             return predicates;
         }
 
-        private IPredicate VisitAtomicFormulaSkeleton(PddlParser.AtomicFormulaSkeletonContext context)
+        private IPredicate ParseAtomicFormulaSkeleton(PddlParser.AtomicFormulaSkeletonContext context)
         {
             var name = context.predicate().GetText();
-            var parameters = VisitTypedVariableList(context.typedVariableList());
+            var parameters = ParseTypedVariableList(context.typedVariableList());
             return new Predicate(name, parameters);
         }
 
-        private IAction VisitActionDef(PddlParser.ActionDefContext context)
+        private IAction ParseActionDef(PddlParser.ActionDefContext context)
         {
             var name = context.name().GetText();
-            var parameters = VisitTypedVariableList(context.typedVariableList());
+            var parameters = ParseTypedVariableList(context.typedVariableList());
             var precondition = VisitPrecondition(context.goalDesc());
             var effect = VisitEffectContext(context.effect());
 
             return new Action(name, parameters, precondition, effect);
         }
 
-        private List<IParameter> VisitTypedVariableList(PddlParser.TypedVariableListContext context)
+        private List<IParameter> ParseTypedVariableList(PddlParser.TypedVariableListContext context)
         {
             var parameters = new List<IParameter>();
 
@@ -224,7 +224,7 @@ namespace AIInGames.Planning.PDDL.Visitors
             else if (context is PddlParser.CEffectWhenContext when)
             {
                 var condition = VisitGoalDesc(when.goalDesc());
-                var effect = VisitCondEffect(when.condEffect());
+                var effect = ParseCondEffect(when.condEffect());
                 return Effect.When(condition, effect);
             }
             else if (context is PddlParser.CEffectSimpleContext simple)
@@ -235,7 +235,7 @@ namespace AIInGames.Planning.PDDL.Visitors
             throw new System.Exception($"Unknown conditional effect type: {context.GetType().Name}");
         }
 
-        private IEffect VisitCondEffect(PddlParser.CondEffectContext context)
+        private IEffect ParseCondEffect(PddlParser.CondEffectContext context)
         {
             if (context.pEffect().Length > 0)
             {

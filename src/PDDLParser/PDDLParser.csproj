@@ -8,16 +8,17 @@
     <!-- NuGet Package Metadata -->
     <PackageId>AIInGames.Planning.PDDL</PackageId>
     <Version>0.0.1</Version>
-    <Authors>AIInGames</Authors>
-    <Company>AIInGames</Company>
+    <Authors>Marek Marchlewicz</Authors>
+    <Company>AI In Games</Company>
     <Product>PDDL Parser for .NET and Unity</Product>
     <Description>A PDDL (Planning Domain Definition Language) parser for C# and Unity. Supports STRIPS, typing, negative preconditions, conditional effects, and basic ADL. Compatible with .NET Standard 2.1 and Unity 2021.2+.</Description>
-    <PackageTags>pddl;planning;ai;parser;unity;antlr;game-ai;automated-planning</PackageTags>
+    <PackageTags>pddl-parser;ai-planning;game-ai;unity;csharp;dotnet;strips;goap;autonomous-agents;behavior-planning</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/YOUR_USERNAME/PDDL-Parser</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/YOUR_USERNAME/PDDL-Parser</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/AI-In-Games/PDDL-Parser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AI-In-Games/PDDL-Parser</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright (c) 2025 AI In Games</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 

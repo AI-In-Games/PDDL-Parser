@@ -21,16 +21,16 @@ namespace AIInGames.Planning.PDDL.Visitors
             _typeMap["object"] = objectType;
 
             var objects = context.objectDecl() != null
-                ? VisitObjectDecl(context.objectDecl())
+                ? ParseObjectDecl(context.objectDecl())
                 : new List<IObject>();
 
-            var initialState = VisitInit(context.init());
-            var goal = VisitGoal(context.goal());
+            var initialState = ParseInit(context.init());
+            var goal = ParseGoal(context.goal());
 
             return new Problem(name, domainName, objects, initialState, goal);
         }
 
-        private List<IObject> VisitObjectDecl(PddlParser.ObjectDeclContext context)
+        private List<IObject> ParseObjectDecl(PddlParser.ObjectDeclContext context)
         {
             var objects = new List<IObject>();
             var typedList = context.typedNameList();
@@ -61,19 +61,19 @@ namespace AIInGames.Planning.PDDL.Visitors
             return objects;
         }
 
-        private List<ILiteral> VisitInit(PddlParser.InitContext context)
+        private List<ILiteral> ParseInit(PddlParser.InitContext context)
         {
             return context.initEl()
-                .Select(VisitInitEl)
+                .Select(ParseInitEl)
                 .ToList();
         }
 
-        private ILiteral VisitInitEl(PddlParser.InitElContext context)
+        private ILiteral ParseInitEl(PddlParser.InitElContext context)
         {
-            return VisitLiteral(context.literal());
+            return ParseLiteral(context.literal());
         }
 
-        private ILiteral VisitLiteral(PddlParser.LiteralContext context)
+        private ILiteral ParseLiteral(PddlParser.LiteralContext context)
         {
             var atomicFormula = context.atomicFormula();
             var isNegated = context.ChildCount > 1; // '(not ...)' has more than 1 child
@@ -97,7 +97,7 @@ namespace AIInGames.Planning.PDDL.Visitors
             return new Literal(predicate, arguments, isNegated);
         }
 
-        private ICondition VisitGoal(PddlParser.GoalContext context)
+        private ICondition ParseGoal(PddlParser.GoalContext context)
         {
             return VisitGoalDesc(context.goalDesc());
         }
