@@ -1,0 +1,43 @@
+name: Generate ANTLR Files
+
+on:
+  push:
+    paths:
+      - 'src/PDDLParser/Grammar/**/*.g4'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  generate:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build project (generates ANTLR files)
+      run: dotnet build --no-restore
+
+    - name: Check for changes in Generated folder
+      id: check_changes
+      run: |
+        git diff --exit-code src/PDDLParser/Generated/ || echo "has_changes=true" >> $GITHUB_OUTPUT
+      continue-on-error: true
+
+    - name: Commit and push generated files
+      if: steps.check_changes.outputs.has_changes == 'true'
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "actions@github.com"
+        git add src/PDDLParser/Generated/
+        git commit -m "Auto-generate ANTLR files from grammar changes"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
