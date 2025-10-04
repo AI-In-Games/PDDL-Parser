@@ -1,0 +1,25 @@
+{
+  "name": "com.aiingames.pddl-parser",
+  "version": "0.0.1",
+  "displayName": "PDDL Parser",
+  "description": "A PDDL (Planning Domain Definition Language) parser for C# and Unity. Supports STRIPS, typing, negative preconditions, conditional effects, and basic ADL. Compatible with Unity 2021.2+.",
+  "unity": "2021.2",
+  "keywords": [
+    "pddl",
+    "planning",
+    "ai",
+    "strips",
+    "goap"
+  ],
+  "author": {
+    "name": "AI In Games",
+    "email": "aiingames@hotmail.com",
+    "url": "https://aiingames.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AI-In-Games/PDDL-Parser.git"
+  },
+  "dependencies": {}
+}

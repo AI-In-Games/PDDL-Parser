@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>AIInGames.Planning.PDDL</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Marek Marchlewicz</Authors>
+    <Company>AI In Games</Company>
+    <Product>PDDL Parser for .NET and Unity</Product>
+    <Description>A PDDL (Planning Domain Definition Language) parser for C# and Unity. Supports STRIPS, typing, negative preconditions, conditional effects, and basic ADL. Compatible with .NET Standard 2.1 and Unity 2021.2+.</Description>
+    <PackageTags>pddl-parser;ai-planning;game-ai;unity;csharp;dotnet;strips;goap;autonomous-agents;behavior-planning</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/AI-In-Games/PDDL-Parser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AI-In-Games/PDDL-Parser</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright (c) 2025 AI In Games</Copyright>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <!-- Read release notes from CHANGELOG.md -->
+  <Target Name="SetPackageReleaseNotes" BeforeTargets="GenerateNuspec">
+    <PropertyGroup>
+      <PackageReleaseNotes>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)\..\..\CHANGELOG.md'))</PackageReleaseNotes>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Include README in NuGet package -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+    <PackageReference Include="Antlr4BuildTasks" Version="12.10.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Antlr4 Include="Grammar\**\*.g4">
+      <Visitor>true</Visitor>
+      <Listener>false</Listener>
+      <Package>AIInGames.Planning.PDDL.Generated</Package>
+    </Antlr4>
+  </ItemGroup>
+
+  <!-- Exclude Generated folder from compilation (it's for Unity import only) -->
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <EmbeddedResource Remove="Generated\**" />
+    <None Remove="Generated\**" />
+  </ItemGroup>
+
+  <!-- Copy generated ANTLR files to Generated folder for Unity import -->
+  <Target Name="CopyGeneratedFilesForUnity" AfterTargets="Antlr4Compile">
+    <ItemGroup>
+      <GeneratedAntlrFiles Include="$(IntermediateOutputPath)Pddl*.cs" />
+    </ItemGroup>
+    <Copy SourceFiles="@(GeneratedAntlrFiles)" DestinationFolder="Generated\" SkipUnchangedFiles="true" />
+
+    <Message Text="Copied ANTLR generated files to Generated folder for Unity import" Importance="high" />
+  </Target>
+
+</Project>

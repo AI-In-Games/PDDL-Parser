@@ -1,0 +1,16 @@
+{
+    "name": "AIInGames.Planning.PDDL",
+    "rootNamespace": "AIInGames.Planning.PDDL",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Antlr4.Runtime.Standard.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

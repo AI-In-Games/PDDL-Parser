@@ -1,0 +1,51 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        dotnet-version: ['6.0.x']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Build Unity Package
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          pwsh build-unity-package.ps1
+        else
+          bash build-unity-package.sh
+        fi
+      shell: bash
+
+    - name: Verify Unity Package
+      run: |
+        if [ ! -f "UnityPackage/package.json" ]; then
+          echo "Error: Unity package not built correctly"
+          exit 1
+        fi
+        echo "Unity package verified successfully"
+      shell: bash

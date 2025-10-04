@@ -1,0 +1,88 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.0.0, v1.2.3, etc.
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build Release
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build --verbosity normal
+
+    - name: Publish DLL (self-contained)
+      run: dotnet publish src/PDDLParser/PDDLParser.csproj --configuration Release --output ./publish/dll
+
+    - name: Package Unity source files
+      run: |
+        mkdir -p ./publish/unity-source
+        cp -r src/PDDLParser/Models ./publish/unity-source/
+        cp -r src/PDDLParser/Implementation ./publish/unity-source/
+        cp -r src/PDDLParser/Visitors ./publish/unity-source/
+        cp -r src/PDDLParser/Errors ./publish/unity-source/
+        cp -r src/PDDLParser/Generated ./publish/unity-source/
+        cp src/PDDLParser/*.cs ./publish/unity-source/ 2>/dev/null || true
+        cp README.md ./publish/unity-source/
+        cp LICENSE ./publish/unity-source/
+        cp UNITY_IMPORT_GUIDE.md ./publish/unity-source/
+
+    - name: Create ZIP archives
+      run: |
+        cd ./publish/dll && zip -r ../../PDDLParser-DLL-${{ github.ref_name }}.zip . && cd ../..
+        cd ./publish/unity-source && zip -r ../../PDDLParser-Unity-Source-${{ github.ref_name }}.zip . && cd ../..
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          PDDLParser-DLL-${{ github.ref_name }}.zip
+          PDDLParser-Unity-Source-${{ github.ref_name }}.zip
+        body: |
+          ## PDDL Parser ${{ github.ref_name }}
+
+          ### Installation
+
+          **For Unity (Recommended):**
+          - Use Unity Package Manager with git URL: `https://github.com/AI-In-Games/PDDL-Parser.git?path=/UnityPackage`
+          - Or download: `PDDLParser-Unity-Source-${{ github.ref_name }}.zip` for manual import
+          - See [UNITY_IMPORT_GUIDE.md](UNITY_IMPORT_GUIDE.md) for instructions
+
+          **For .NET projects:**
+          - NuGet: `dotnet add package AIInGames.Planning.PDDL`
+          - Or download: `PDDLParser-DLL-${{ github.ref_name }}.zip`
+
+          ### Features
+          - PDDL domain and problem parsing
+          - STRIPS, typing, negative preconditions, conditional effects
+          - Basic ADL support (and, or, not, imply, forall, exists)
+          - .NET Standard 2.1 (Unity 2021.2+ compatible)
+          - Self-contained Unity package (includes ANTLR runtime DLL)
+
+          ### Documentation
+          - [README.md](README.md) - Getting started
+          - [UNITY_IMPORT_GUIDE.md](UNITY_IMPORT_GUIDE.md) - Unity integration guide
+          - [CONTRIBUTING.md](CONTRIBUTING.md) - Development guide
+
+          ### License
+          MIT License - includes ANTLR 4 (BSD 3-Clause)
+        draft: false
+        prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-rc') }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
