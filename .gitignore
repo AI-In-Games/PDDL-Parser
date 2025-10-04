@@ -41,3 +41,7 @@ desktop.ini
 # Keep these documentation files
 !README.md
 !LICENSE
+
+# Maintainer-only documentation
+REPOSITORY_SETTINGS.md
+NUGET_SETUP.md

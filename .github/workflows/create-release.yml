@@ -34,13 +34,11 @@ jobs:
       run: |
         mkdir -p ./publish/unity-source
         cp -r src/PDDLParser/Models ./publish/unity-source/
-        cp -r src/PDDLParser/Internal ./publish/unity-source/
+        cp -r src/PDDLParser/Implementation ./publish/unity-source/
         cp -r src/PDDLParser/Visitors ./publish/unity-source/
         cp -r src/PDDLParser/Errors ./publish/unity-source/
         cp -r src/PDDLParser/Generated ./publish/unity-source/
-        cp src/PDDLParser/IPDDLParser.cs ./publish/unity-source/
-        cp src/PDDLParser/IParseResult.cs ./publish/unity-source/
-        cp src/PDDLParser/PDDLParser.cs ./publish/unity-source/
+        cp src/PDDLParser/*.cs ./publish/unity-source/ 2>/dev/null || true
         cp README.md ./publish/unity-source/
         cp LICENSE ./publish/unity-source/
         cp UNITY_IMPORT_GUIDE.md ./publish/unity-source/
@@ -59,11 +57,12 @@ jobs:
         body: |
           ## PDDL Parser ${{ github.ref_name }}
 
-          ### Download Options
+          ### Installation
 
-          **For Unity or any C# project:**
-          - `PDDLParser-Unity-Source-${{ github.ref_name }}.zip` - Copy source files directly into your project
-          - See [UNITY_IMPORT_GUIDE.md](UNITY_IMPORT_GUIDE.md) for Unity-specific instructions
+          **For Unity (Recommended):**
+          - Use Unity Package Manager with git URL: `https://github.com/AI-In-Games/PDDL-Parser.git?path=/UnityPackage`
+          - Or download: `PDDLParser-Unity-Source-${{ github.ref_name }}.zip` for manual import
+          - See [UNITY_IMPORT_GUIDE.md](UNITY_IMPORT_GUIDE.md) for instructions
 
           **For .NET projects:**
           - NuGet: `dotnet add package AIInGames.Planning.PDDL`
@@ -74,14 +73,15 @@ jobs:
           - STRIPS, typing, negative preconditions, conditional effects
           - Basic ADL support (and, or, not, imply, forall, exists)
           - .NET Standard 2.1 (Unity 2021.2+ compatible)
-          - Zero external dependencies when using source files
+          - Self-contained Unity package (includes ANTLR runtime DLL)
 
           ### Documentation
-          - [README.md](README.md) - Getting started and acknowledgments
+          - [README.md](README.md) - Getting started
           - [UNITY_IMPORT_GUIDE.md](UNITY_IMPORT_GUIDE.md) - Unity integration guide
+          - [CONTRIBUTING.md](CONTRIBUTING.md) - Development guide
 
-          ### Tests
-          All 16 tests passing
+          ### License
+          MIT License - includes ANTLR 4 (BSD 3-Clause)
         draft: false
         prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-rc') }}
       env:

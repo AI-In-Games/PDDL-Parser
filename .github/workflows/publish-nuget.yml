@@ -1,14 +1,17 @@
 name: Publish to NuGet
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'  # Triggers on version tags like v1.0.0, v1.2.3, etc.
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:  # Manual trigger (recommended)
+  # Optionally also trigger on version tags:
+  # push:
+  #   tags:
+  #     - 'v*.*.*'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Only repository owners/collaborators can run this
+    if: github.actor == github.repository_owner || github.event_name == 'push'
 
     steps:
     - name: Checkout code

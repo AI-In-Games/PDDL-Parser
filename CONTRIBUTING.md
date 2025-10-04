@@ -1,6 +1,6 @@
 # Contributing to PDDL Parser
 
-Thanks for your interest in contributing! Here's how to get started.
+Thank you for contributing. To get started:
 
 ## Quick Start
 
@@ -67,7 +67,45 @@ PDDL-Parser/
 └── build-unity-package.*    # Build scripts
 ```
 
-## Release Process
+## Testing Your Changes
+
+Before submitting a PR:
+
+1. **Run tests:**
+   ```bash
+   dotnet test
+   ```
+
+2. **Build in Release mode:**
+   ```bash
+   dotnet build --configuration Release
+   ```
+
+3. **Rebuild Unity package:**
+   ```bash
+   ./build-unity-package.sh  # or .ps1 on Windows
+   ```
+
+4. **Commit all changes:**
+   - Include source code changes
+   - Include generated Unity package files in `UnityPackage/Runtime/`
+
+## Pull Request Guidelines
+
+- Keep PRs focused on a single feature or fix
+- Include tests for new functionality
+- Update documentation if needed
+- All tests must pass
+- Follow existing code style
+
+---
+
+## For Maintainers Only
+
+<details>
+<summary>Release Process (click to expand)</summary>
+
+### Releasing a New Version
 
 1. Update version in:
    - `src/PDDLParser/PDDLParser.csproj` (NuGet version)
@@ -82,8 +120,25 @@ PDDL-Parser/
    ./build-unity-package.sh
    ```
 
-3. Commit and push to `main`
+3. Commit and push to `main`:
+   ```bash
+   git add .
+   git commit -m "Release v0.0.1"
+   git push origin main
+   ```
 
-4. GitHub Actions will run CI
+4. **Publish to NuGet (Manual):**
+   - Go to: https://github.com/AI-In-Games/PDDL-Parser/actions/workflows/publish-nuget.yml
+   - Click "Run workflow"
+   - Select branch: `main`
+   - Click "Run workflow"
 
-5. For NuGet: Manually publish the package using the GitHub release workflow
+5. **Create GitHub Release (Optional):**
+   - Create and push a version tag:
+     ```bash
+     git tag v0.0.1
+     git push origin v0.0.1
+     ```
+   - This auto-creates a GitHub release with downloadable ZIPs
+
+</details>

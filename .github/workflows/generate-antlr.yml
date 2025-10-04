@@ -9,6 +9,8 @@ on:
 jobs:
   generate:
     runs-on: windows-latest
+    # Only run for repository owner or on push events
+    if: github.actor == github.repository_owner || github.event_name == 'push'
 
     steps:
     - name: Checkout code
