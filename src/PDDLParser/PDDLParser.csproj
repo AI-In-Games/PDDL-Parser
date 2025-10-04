@@ -22,6 +22,16 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <!-- Read release notes from CHANGELOG.md -->
+  <Target Name="SetPackageReleaseNotes" BeforeTargets="GenerateNuspec">
+    <ReadLinesFromFile File="$(MSBuildProjectDirectory)\..\..\CHANGELOG.md">
+      <Output TaskParameter="Lines" ItemName="ChangelogLines" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <PackageReleaseNotes>$([System.String]::Join('%0A', @(ChangelogLines)))</PackageReleaseNotes>
+    </PropertyGroup>
+  </Target>
+
   <!-- Include README in NuGet package -->
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />

@@ -82,7 +82,7 @@ namespace AIInGames.Planning.PDDL.Tests
 
             var objA = result.Result!.GetObject("a");
             Assert.That(objA, Is.Not.Null);
-            Assert.That(objA.Name, Is.EqualTo("a"));
+            Assert.That(objA!.Name, Is.EqualTo("a"));
         }
 
         [Test]
@@ -130,11 +130,11 @@ namespace AIInGames.Planning.PDDL.Tests
 
             var truck = result.Result!.GetObject("truck1");
             Assert.That(truck, Is.Not.Null);
-            Assert.That(truck.Type?.Name, Is.EqualTo("truck"));
+            Assert.That(truck!.Type?.Name, Is.EqualTo("truck"));
 
             var package1 = result.Result!.GetObject("package1");
             Assert.That(package1, Is.Not.Null);
-            Assert.That(package1.Type?.Name, Is.EqualTo("package"));
+            Assert.That(package1!.Type?.Name, Is.EqualTo("package"));
         }
 
         [Test]

@@ -77,7 +77,7 @@ namespace AIInGames.Planning.PDDL.Tests
 
             var onPredicate = result.Result!.GetPredicate("on");
             Assert.That(onPredicate, Is.Not.Null);
-            Assert.That(onPredicate.Arity, Is.EqualTo(2));
+            Assert.That(onPredicate!.Arity, Is.EqualTo(2));
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace AIInGames.Planning.PDDL.Tests
 
             var pickupAction = result.Result!.GetAction("pick-up");
             Assert.That(pickupAction, Is.Not.Null);
-            Assert.That(pickupAction.Parameters.Count, Is.EqualTo(1));
+            Assert.That(pickupAction!.Parameters.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -129,9 +129,9 @@ namespace AIInGames.Planning.PDDL.Tests
 
             var atPredicate = result.Result!.GetPredicate("at");
             Assert.That(atPredicate, Is.Not.Null);
-            Assert.That(atPredicate.Arity, Is.EqualTo(2));
-            Assert.That(atPredicate.Parameters[0].Type?.Name, Is.EqualTo("package"));
-            Assert.That(atPredicate.Parameters[1].Type?.Name, Is.EqualTo("location"));
+            Assert.That(atPredicate!.Arity, Is.EqualTo(2));
+            Assert.That(atPredicate!.Parameters[0].Type?.Name, Is.EqualTo("package"));
+            Assert.That(atPredicate!.Parameters[1].Type?.Name, Is.EqualTo("location"));
         }
 
         [Test]
