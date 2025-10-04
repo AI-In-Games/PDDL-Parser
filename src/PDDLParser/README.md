@@ -9,7 +9,7 @@ This directory contains the PDDL parser library implementation.
 ```
 PDDLParser/
 ├── Models/           # Domain model interfaces (IDomain, IProblem, IAction, etc.)
-├── Internal/         # Concrete implementations of model interfaces
+├── Implementation/   # Concrete implementations of model interfaces
 ├── Visitors/         # ANTLR visitor pattern implementations
 ├── Errors/           # Error handling and reporting
 ├── Grammar/          # ANTLR grammar files (Pddl.g4)
@@ -24,9 +24,9 @@ PDDLParser/
 The parser uses ANTLR 4 to generate lexer and parser code from the grammar file. Generated files are placed in two locations:
 
 1. `obj/Debug/netstandard2.1/` - Used during .NET compilation
-2. `Generated/` - Pre-generated files for Unity import (no ANTLR dependency needed)
+2. `Generated/` - Pre-generated files for Unity import (requires ANTLR runtime DLL)
 
-The build process automatically cleans local file paths from generated files to keep them portable.
+The build process automatically copies generated files to the `Generated/` folder.
 
 ## Adding PDDL Features
 
@@ -40,7 +40,7 @@ To extend the parser with new PDDL features:
 
 ## Dependencies
 
-- ANTLR 4.13.1 runtime (for .NET builds)
+- ANTLR 4.13.1 runtime (required for both .NET and Unity)
 - .NET Standard 2.1
 
-For Unity builds, no runtime dependencies are needed since parser code is pre-generated.
+For Unity, the ANTLR runtime DLL (Antlr4.Runtime.Standard.dll) is included in the Unity package.

@@ -14,9 +14,20 @@ Install via NuGet (once published):
 dotnet add package AIInGames.Planning.PDDL
 ```
 
-### From Source
+### For Unity Projects
 
-Copy the source files from `src/PDDLParser/` directly into your project. This works for any C# project including Unity. See `UNITY_IMPORT_GUIDE.md` for Unity-specific instructions.
+#### Option 1: Unity Package Manager (Recommended)
+
+1. Open Unity Package Manager (Window > Package Manager)
+2. Click the '+' button in the top-left corner
+3. Select "Add package from git URL..."
+4. Enter: `https://github.com/AI-In-Games/PDDL-Parser.git?path=/UnityPackage`
+
+The package includes pre-generated ANTLR files and runtime DLL - everything is self-contained.
+
+#### Option 2: From Source
+
+Copy the source files from `src/PDDLParser/` directly into your Unity project. See `UNITY_IMPORT_GUIDE.md` for detailed instructions.
 
 ## Usage
 
@@ -60,7 +71,7 @@ dotnet test
 
 ## Unity Compatibility
 
-Targets .NET Standard 2.1, compatible with Unity 2021.2 and later. The Unity distribution includes pre-generated parser files, so no ANTLR dependency is needed at runtime.
+Targets .NET Standard 2.1, compatible with Unity 2021.2 and later. The Unity package includes pre-generated parser files and the ANTLR runtime DLL (self-contained, no additional downloads needed).
 
 ## License
 

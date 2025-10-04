@@ -31,3 +31,21 @@ jobs:
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    - name: Build Unity Package
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          pwsh build-unity-package.ps1
+        else
+          bash build-unity-package.sh
+        fi
+      shell: bash
+
+    - name: Verify Unity Package
+      run: |
+        if [ ! -f "UnityPackage/package.json" ]; then
+          echo "Error: Unity package not built correctly"
+          exit 1
+        fi
+        echo "Unity package verified successfully"
+      shell: bash

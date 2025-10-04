@@ -10,6 +10,6 @@ Initial release.
 - Universal and existential quantification (forall, exists)
 - .NET Standard 2.1 target for Unity 2021.2+ compatibility
 - NuGet package distribution
-- Pre-generated ANTLR files for zero-dependency Unity integration
+- Pre-generated ANTLR files and runtime DLL for Unity Package Manager integration
 - Comprehensive test suite with NUnit
 - GitHub Actions for CI/CD and automated releases

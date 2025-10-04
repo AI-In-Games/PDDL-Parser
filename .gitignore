@@ -35,6 +35,9 @@ desktop.ini
 # The Generated folder contains pre-built ANTLR files for Unity import
 # src/PDDLParser/Generated/
 
+# Note: UnityPackage/Runtime/ is auto-generated but MUST be committed
+# so users can install via Unity Package Manager without building
+
 # Keep these documentation files
 !README.md
 !LICENSE
