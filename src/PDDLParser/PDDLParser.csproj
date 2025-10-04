@@ -56,10 +56,7 @@
     </ItemGroup>
     <Copy SourceFiles="@(GeneratedAntlrFiles)" DestinationFolder="Generated\" SkipUnchangedFiles="true" />
 
-    <!-- Remove local file paths from generated files -->
-    <Exec Command="powershell -Command &quot;Get-ChildItem Generated\*.cs | ForEach-Object { (Get-Content $_.FullName) -replace 'Generated from .+/Grammar/', 'Generated from Grammar/' | Set-Content $_.FullName }&quot;" />
-
-    <Message Text="Copied and cleaned ANTLR generated files to Generated folder for Unity import" Importance="high" />
+    <Message Text="Copied ANTLR generated files to Generated folder for Unity import" Importance="high" />
   </Target>
 
 </Project>
