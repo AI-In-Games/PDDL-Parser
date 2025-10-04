@@ -1,0 +1,40 @@
+# .NET Build outputs
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Visual Studio / Rider
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.sln.docstates
+*.userprefs
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build artifacts (keep Generated folder for Unity)
+# The Generated folder contains pre-built ANTLR files for Unity import
+# src/PDDLParser/Generated/
+
+# Keep these documentation files
+!README.md
+!LICENSE

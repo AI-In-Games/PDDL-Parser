@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>AIInGames.Planning.PDDL</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>AIInGames</Authors>
+    <Company>AIInGames</Company>
+    <Product>PDDL Parser for .NET and Unity</Product>
+    <Description>A PDDL (Planning Domain Definition Language) parser for C# and Unity. Supports STRIPS, typing, negative preconditions, conditional effects, and basic ADL. Compatible with .NET Standard 2.1 and Unity 2021.2+.</Description>
+    <PackageTags>pddl;planning;ai;parser;unity;antlr;game-ai;automated-planning</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/YOUR_USERNAME/PDDL-Parser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/YOUR_USERNAME/PDDL-Parser</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <!-- Include README in NuGet package -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+    <PackageReference Include="Antlr4BuildTasks" Version="12.10.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Antlr4 Include="Grammar\**\*.g4">
+      <Visitor>true</Visitor>
+      <Listener>false</Listener>
+      <Package>AIInGames.Planning.PDDL.Generated</Package>
+    </Antlr4>
+  </ItemGroup>
+
+  <!-- Exclude Generated folder from compilation (it's for Unity import only) -->
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <EmbeddedResource Remove="Generated\**" />
+    <None Remove="Generated\**" />
+  </ItemGroup>
+
+  <!-- Copy generated ANTLR files to Generated folder for Unity import -->
+  <Target Name="CopyGeneratedFilesForUnity" AfterTargets="Antlr4Compile">
+    <ItemGroup>
+      <GeneratedAntlrFiles Include="$(IntermediateOutputPath)Pddl*.cs" />
+    </ItemGroup>
+    <Copy SourceFiles="@(GeneratedAntlrFiles)" DestinationFolder="Generated\" SkipUnchangedFiles="true" />
+
+    <!-- Remove local file paths from generated files -->
+    <Exec Command="powershell -Command &quot;Get-ChildItem Generated\*.cs | ForEach-Object { (Get-Content $_.FullName) -replace 'Generated from .+/Grammar/', 'Generated from Grammar/' | Set-Content $_.FullName }&quot;" />
+
+    <Message Text="Copied and cleaned ANTLR generated files to Generated folder for Unity import" Importance="high" />
+  </Target>
+
+</Project>
