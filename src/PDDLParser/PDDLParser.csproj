@@ -24,11 +24,8 @@
 
   <!-- Read release notes from CHANGELOG.md -->
   <Target Name="SetPackageReleaseNotes" BeforeTargets="GenerateNuspec">
-    <ReadLinesFromFile File="$(MSBuildProjectDirectory)\..\..\CHANGELOG.md">
-      <Output TaskParameter="Lines" ItemName="ChangelogLines" />
-    </ReadLinesFromFile>
     <PropertyGroup>
-      <PackageReleaseNotes>$([System.String]::Join('%0A', @(ChangelogLines)))</PackageReleaseNotes>
+      <PackageReleaseNotes>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)\..\..\CHANGELOG.md'))</PackageReleaseNotes>
     </PropertyGroup>
   </Target>
 
