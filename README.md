@@ -3,7 +3,7 @@
 A PDDL (Planning Domain Definition Language) parser for C# and Unity, supporting STRIPS, typing, negative preconditions, conditional effects, and basic ADL features.
 
 **Current Version:** 0.0.1 (Initial release - parsing only)
-**Next Milestone:** 0.1.0 (Adds PDDL serialization with round-trip support)
+**Next Milestone:** (0.1.0([https://github.com/AI-In-Games/PDDL-Parser/milestone/1] (Adds PDDL serialization with round-trip support)
 
 [Changelog](CHANGELOG.md) | [Contributing](CONTRIBUTING.md)
 
