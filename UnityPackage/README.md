@@ -2,6 +2,11 @@
 
 A PDDL (Planning Domain Definition Language) parser for Unity, supporting STRIPS, typing, negative preconditions, conditional effects, and basic ADL features.
 
+**Current Version:** 0.0.1 (Initial release - parsing only)
+**Next Milestone:** 0.1.0 (Adds PDDL serialization with round-trip support)
+
+[Changelog](CHANGELOG.md)
+
 ## Installation
 
 ### Unity Package Manager

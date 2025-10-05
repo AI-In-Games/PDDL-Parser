@@ -2,7 +2,10 @@
 
 A PDDL (Planning Domain Definition Language) parser for C# and Unity, supporting STRIPS, typing, negative preconditions, conditional effects, and basic ADL features.
 
-Version: 0.0.1
+**Current Version:** 0.0.1 (Initial release - parsing only)
+**Next Milestone:** 0.1.0 (Adds PDDL serialization with round-trip support)
+
+[Changelog](CHANGELOG.md) | [Contributing](CONTRIBUTING.md)
 
 ## Installation
 
@@ -27,7 +30,7 @@ The package includes pre-generated ANTLR files and runtime DLL - everything is s
 
 #### Option 2: From Source
 
-Copy the source files from `src/PDDLParser/` directly into your Unity project. See `UNITY_IMPORT_GUIDE.md` for detailed instructions.
+Copy the source files from `src/PDDLParser/` directly into your Unity project. See [UNITY_IMPORT_GUIDE.md](UNITY_IMPORT_GUIDE.md) for detailed instructions.
 
 ## Usage
 
@@ -94,4 +97,4 @@ Contact: aiingames@hotmail.com or [open an issue](https://github.com/AI-In-Games
 
 ## Contributing
 
-Pull requests are welcome. Please include tests for new features.
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.

@@ -2,6 +2,11 @@
 
 All notable changes to this package will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- PDDL serialization with round-trip support: parse PDDL → modify in code → serialize back to PDDL via `ToPddl()` methods ([#2](https://github.com/AI-In-Games/PDDL-Parser/issues/2))
+
 ## [0.0.1] - 2025-10-04
 
 Initial release.
