@@ -181,13 +181,15 @@ namespace AIInGames.Planning.PDDL.Visitors
             }
             else if (context is PddlParser.GoalExistsContext exists)
             {
+                var parameters = ParseTypedVariableList(exists.typedVariableList());
                 var child = VisitGoalDesc(exists.goalDesc());
-                return Condition.Exists(child);
+                return Condition.Exists(parameters, child);
             }
             else if (context is PddlParser.GoalForallContext forall)
             {
+                var parameters = ParseTypedVariableList(forall.typedVariableList());
                 var child = VisitGoalDesc(forall.goalDesc());
-                return Condition.ForAll(child);
+                return Condition.ForAll(parameters, child);
             }
 
             throw new System.Exception($"Unknown goal description type: {context.GetType().Name}");
@@ -218,8 +220,9 @@ namespace AIInGames.Planning.PDDL.Visitors
         {
             if (context is PddlParser.CEffectForallContext forall)
             {
+                var parameters = ParseTypedVariableList(forall.typedVariableList());
                 var effect = VisitEffectContext(forall.effect());
-                return Effect.ForAll(effect);
+                return Effect.ForAll(parameters, effect);
             }
             else if (context is PddlParser.CEffectWhenContext when)
             {

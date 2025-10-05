@@ -7,7 +7,7 @@
 
     <!-- NuGet Package Metadata -->
     <PackageId>AIInGames.Planning.PDDL</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.1.0</Version>
     <Authors>Marek Marchlewicz</Authors>
     <Company>AI In Games</Company>
     <Product>PDDL Parser for .NET and Unity</Product>

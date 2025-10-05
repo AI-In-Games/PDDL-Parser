@@ -5,7 +5,7 @@ namespace AIInGames.Planning.PDDL
     /// <summary>
     /// Represents a PDDL problem - defines objects, initial state, and goal
     /// </summary>
-    public interface IProblem
+    public interface IProblem : IPddlSerializable
     {
         /// <summary>
         /// The name of the problem (e.g., "blocks-4", "gripper-x-1")

@@ -132,13 +132,15 @@ namespace AIInGames.Planning.PDDL.Visitors
             }
             else if (context is PddlParser.GoalExistsContext exists)
             {
+                var parameters = ParseTypedVariableList(exists.typedVariableList());
                 var child = VisitGoalDesc(exists.goalDesc());
-                return Condition.Exists(child);
+                return Condition.Exists(parameters, child);
             }
             else if (context is PddlParser.GoalForallContext forall)
             {
+                var parameters = ParseTypedVariableList(forall.typedVariableList());
                 var child = VisitGoalDesc(forall.goalDesc());
-                return Condition.ForAll(child);
+                return Condition.ForAll(parameters, child);
             }
 
             throw new System.Exception($"Unknown goal description type: {context.GetType().Name}");
@@ -163,6 +165,33 @@ namespace AIInGames.Planning.PDDL.Visitors
             }
 
             return new Literal(predicate, arguments, isNegated);
+        }
+
+        private List<IParameter> ParseTypedVariableList(PddlParser.TypedVariableListContext context)
+        {
+            var parameters = new List<IParameter>();
+
+            // Handle typed variables (variable+ '-' type)
+            foreach (var singleType in context.singleTypeVarList())
+            {
+                var typeName = singleType.type().GetText();
+                var type = ResolveType(typeName);
+
+                foreach (var varContext in singleType.variable())
+                {
+                    var varName = varContext.GetText();
+                    parameters.Add(new Parameter(varName, type));
+                }
+            }
+
+            // Handle untyped variables
+            foreach (var varContext in context.variable())
+            {
+                var varName = varContext.GetText();
+                parameters.Add(new Parameter(varName, null));
+            }
+
+            return parameters;
         }
 
         private IType ResolveType(string typeName)
