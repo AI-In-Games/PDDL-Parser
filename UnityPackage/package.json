@@ -1,6 +1,6 @@
 {
   "name": "com.aiingames.pddl-parser",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "displayName": "PDDL Parser",
   "description": "A PDDL (Planning Domain Definition Language) parser for C# and Unity. Supports STRIPS, typing, negative preconditions, conditional effects, and basic ADL. Compatible with Unity 2021.2+.",
   "unity": "2021.2",

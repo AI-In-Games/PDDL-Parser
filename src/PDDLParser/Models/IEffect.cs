@@ -6,7 +6,7 @@ namespace AIInGames.Planning.PDDL
     /// Represents an effect in PDDL - what changes when an action is executed
     /// Can be a simple literal, conjunction, conditional effect, etc.
     /// </summary>
-    public interface IEffect
+    public interface IEffect : IPddlSerializable
     {
         /// <summary>
         /// The type of effect (literal, and, when, forall)
@@ -27,6 +27,12 @@ namespace AIInGames.Planning.PDDL
         /// For conditional effects (when), the condition
         /// </summary>
         ICondition? Condition { get; }
+
+        /// <summary>
+        /// For quantified effects (forall), the bound variables.
+        /// Empty for non-quantified effects.
+        /// </summary>
+        IReadOnlyList<IParameter> Parameters { get; }
     }
 
     /// <summary>

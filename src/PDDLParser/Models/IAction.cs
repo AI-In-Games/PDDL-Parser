@@ -5,7 +5,7 @@ namespace AIInGames.Planning.PDDL
     /// <summary>
     /// Represents an action (operator) in PDDL with parameters, preconditions, and effects
     /// </summary>
-    public interface IAction
+    public interface IAction : IPddlSerializable
     {
         /// <summary>
         /// The name of the action (e.g., "move", "pick-up", "stack")

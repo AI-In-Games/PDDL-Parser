@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from Grammar/Pddl.g4 by ANTLR 4.13.1
+// Generated from C:/Users/march/Documents/Projects/PDDL-Parser/src/PDDLParser/Grammar/Pddl.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162

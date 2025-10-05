@@ -5,7 +5,7 @@ namespace AIInGames.Planning.PDDL
     /// <summary>
     /// Represents a predicate definition in PDDL (e.g., '(on ?x ?y - block)')
     /// </summary>
-    public interface IPredicate
+    public interface IPredicate : IPddlSerializable
     {
         /// <summary>
         /// The name of the predicate (e.g., "on", "clear", "at")

@@ -6,7 +6,7 @@ namespace AIInGames.Planning.PDDL
     /// Represents a condition (goal description) in PDDL.
     /// Can be a literal, conjunction (and), disjunction (or), negation (not), etc.
     /// </summary>
-    public interface ICondition
+    public interface ICondition : IPddlSerializable
     {
         /// <summary>
         /// The type of condition (literal, and, or, not, imply, forall, exists, etc.)
@@ -22,6 +22,12 @@ namespace AIInGames.Planning.PDDL
         /// For compound conditions (and, or), the child conditions
         /// </summary>
         IReadOnlyList<ICondition> Children { get; }
+
+        /// <summary>
+        /// For quantified conditions (forall, exists), the bound variables.
+        /// Empty for non-quantified conditions.
+        /// </summary>
+        IReadOnlyList<IParameter> Parameters { get; }
     }
 
     /// <summary>

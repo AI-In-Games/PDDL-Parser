@@ -6,7 +6,7 @@ namespace AIInGames.Planning.PDDL
     /// Represents a literal in PDDL - a predicate with specific arguments
     /// Can be positive or negative (e.g., '(on a b)' or '(not (clear a))')
     /// </summary>
-    public interface ILiteral
+    public interface ILiteral : IPddlSerializable
     {
         /// <summary>
         /// The predicate this literal is based on

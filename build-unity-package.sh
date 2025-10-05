@@ -21,9 +21,12 @@ if [ -f "/tmp/pddl-asmdef-backup.json" ]; then
     cp /tmp/pddl-asmdef-backup.json UnityPackage/Runtime/AIInGames.Planning.PDDL.asmdef
 fi
 
-# Copy source directories
-for dir in Errors Implementation Models Visitors; do
-    cp -r "src/PDDLParser/$dir" "UnityPackage/Runtime/"
+# Copy source directories (exclude build artifacts and grammar)
+for dir in src/PDDLParser/*/; do
+    dirname=$(basename "$dir")
+    if [[ "$dirname" != "bin" && "$dirname" != "obj" && "$dirname" != "Grammar" && "$dirname" != "Generated" ]]; then
+        cp -r "$dir" "UnityPackage/Runtime/"
+    fi
 done
 
 # Copy root source files

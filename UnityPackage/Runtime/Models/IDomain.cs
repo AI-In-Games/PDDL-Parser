@@ -5,7 +5,7 @@ namespace AIInGames.Planning.PDDL
     /// <summary>
     /// Represents a PDDL domain - defines types, predicates, and actions
     /// </summary>
-    public interface IDomain
+    public interface IDomain : IPddlSerializable
     {
         /// <summary>
         /// The name of the domain (e.g., "blocksworld", "gripper")
