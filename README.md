@@ -34,26 +34,95 @@ Copy the source files from `src/PDDLParser/` directly into your Unity project. S
 
 ## Usage
 
+All parse methods return `IParseResult<T>`, which carries either the parsed object or a list of errors with line and column numbers.
+
+### Parsing from a string
+
 ```csharp
 using AIInGames.Planning.PDDL;
 
 var parser = new PDDLParser();
 
-// Parse domain
 var domainResult = parser.ParseDomain(domainText);
 if (domainResult.Success)
 {
     var domain = domainResult.Result;
-    // Use domain.Actions, domain.Predicates, etc.
+}
+else
+{
+    foreach (var error in domainResult.Errors)
+        Console.WriteLine($"Line {error.Line}, col {error.Column}: {error.Message}");
 }
 
-// Parse problem
 var problemResult = parser.ParseProblem(problemText);
 if (problemResult.Success)
 {
     var problem = problemResult.Result;
-    // Use problem.Objects, problem.InitialState, problem.Goal
 }
+```
+
+### Parsing from a file
+
+```csharp
+var domainResult = parser.ParseDomainFile("path/to/domain.pddl");
+var problemResult = parser.ParseProblemFile("path/to/problem.pddl");
+```
+
+## Reading Parsed Data
+
+After parsing, the domain and problem objects expose all PDDL constructs through typed interfaces.
+
+### Domain data
+
+```csharp
+var domain = parser.ParseDomain(domainText).Result!;
+
+Console.WriteLine(domain.Name); // "blocksworld"
+
+foreach (var predicate in domain.Predicates)
+    Console.WriteLine($"{predicate.Name}/{predicate.Arity}"); // e.g. "on/2", "clear/1"
+
+foreach (var action in domain.Actions)
+{
+    Console.WriteLine(action.Name); // e.g. "pick-up"
+
+    foreach (var param in action.Parameters)
+        Console.WriteLine($"  ?{param.Name} - {param.Type?.Name ?? "object"}");
+
+    // Precondition is a tree - root is usually ConditionType.And
+    var pre = action.Precondition;
+    if (pre.Type == ConditionType.And)
+    {
+        foreach (var child in pre.Children)
+            if (child.Type == ConditionType.Literal)
+                Console.WriteLine($"  requires: {child.Literal!.Predicate.Name}");
+    }
+}
+
+// Typed lookups return null if not found
+var pickUp = domain.GetAction("pick-up");
+var onPredicate = domain.GetPredicate("on");
+```
+
+### Problem data
+
+```csharp
+var problem = parser.ParseProblem(problemText).Result!;
+
+Console.WriteLine(problem.Name);       // "blocks-4"
+Console.WriteLine(problem.DomainName); // "blocksworld"
+
+foreach (var obj in problem.Objects)
+    Console.WriteLine($"{obj.Name} - {obj.Type?.Name ?? "object"}");
+
+// Initial state is a flat list of ground literals
+foreach (var literal in problem.InitialState)
+    Console.WriteLine($"{(literal.IsNegated ? "not " : "")}{literal.Predicate.Name}({string.Join(", ", literal.Arguments)})");
+
+// Goal is a condition tree (same structure as action preconditions)
+var goal = problem.Goal;
+if (goal.Type == ConditionType.And)
+    Console.WriteLine($"Goal has {goal.Children.Count} conjuncts");
 ```
 
 ## Supported PDDL Features
