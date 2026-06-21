@@ -93,7 +93,7 @@ Testing uses NUnit (MIT License, Copyright 2021 Charlie Poole, Rob Prouse).
 Created by Marek Marchlewicz
 Published by [AI In Games](https://aiingames.com)
 
-Contact: aiingames@hotmail.com or [open an issue](https://github.com/AI-In-Games/PDDL-Parser/issues)
+Contact: contact@aiingames.com or [open an issue](https://github.com/AI-In-Games/PDDL-Parser/issues)
 
 ## Contributing
 

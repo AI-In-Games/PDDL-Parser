@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-06-21
+
 ### Added
 - PDDL serialization with round-trip support: parse PDDL → modify in code → serialize back to PDDL via `ToPddl()` methods ([#2](https://github.com/AI-In-Games/PDDL-Parser/issues/2))
+
+### Fixed
+- Missing `Antlr4.Runtime.Standard.dll` in Unity package
 
 ## [0.0.1] - 2025-10-04
 
