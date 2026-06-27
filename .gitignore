@@ -5,6 +5,10 @@ obj/
 *.pdb
 *.exe
 
+# Bundled VAL validation binaries must be tracked despite the *.exe/*.dll rules above
+!src/PDDLParser.Validation/Binaries/**
+!UnityPackage/Runtime/Validation/Binaries/**
+
 # NuGet
 *.nupkg
 *.snupkg

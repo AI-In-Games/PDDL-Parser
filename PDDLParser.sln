@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2B514338
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDDLParser.Tests", "tests\PDDLParser.Tests\PDDLParser.Tests.csproj", "{52C3579D-DD1C-426E-99B0-A5DF39058DC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDDLParser.Validation", "src\PDDLParser.Validation\PDDLParser.Validation.csproj", "{DE6BA8E5-FFE3-4FC8-B39E-91B1277E82D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{52C3579D-DD1C-426E-99B0-A5DF39058DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52C3579D-DD1C-426E-99B0-A5DF39058DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C3579D-DD1C-426E-99B0-A5DF39058DC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6BA8E5-FFE3-4FC8-B39E-91B1277E82D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6BA8E5-FFE3-4FC8-B39E-91B1277E82D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6BA8E5-FFE3-4FC8-B39E-91B1277E82D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6BA8E5-FFE3-4FC8-B39E-91B1277E82D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E0B31E1A-D279-4070-90B4-E9ECBA608289} = {2A70C7E5-72AF-4B2F-A6B5-5F461D35DE0E}
 		{52C3579D-DD1C-426E-99B0-A5DF39058DC3} = {2B514338-2353-4901-8E6C-42C6110E5D36}
+		{DE6BA8E5-FFE3-4FC8-B39E-91B1277E82D9} = {2A70C7E5-72AF-4B2F-A6B5-5F461D35DE0E}
 	EndGlobalSection
 EndGlobal

@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+
+    <!-- Compile the ENABLE_VALIDATION-gated validation tests -->
+    <DefineConstants>$(DefineConstants);ENABLE_VALIDATION</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,10 +23,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PDDLParser\PDDLParser.csproj" />
+    <ProjectReference Include="..\..\src\PDDLParser.Validation\PDDLParser.Validation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="*.pddl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Copy the VAL binaries next to the test assembly so DefaultValidateBinaryLocator finds them -->
+  <ItemGroup>
+    <None Include="..\..\src\PDDLParser.Validation\Binaries\**\*">
+      <Link>Binaries\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

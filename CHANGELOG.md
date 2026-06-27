@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Optional plan and domain validation via the external VAL tool (`AIInGames.Planning.PDDL.Validation`), gated behind the `ENABLE_VALIDATION` compile symbol. Validates domains, problems, and plans from PDDL strings or parsed `IDomain`/`IProblem` models.
+
 ## [0.1.0] - 2026-06-21
 
 ### Added

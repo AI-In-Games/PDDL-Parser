@@ -125,6 +125,43 @@ if (goal.Type == ConditionType.And)
     Console.WriteLine($"Goal has {goal.Children.Count} conjuncts");
 ```
 
+## Plan and Domain Validation (optional)
+
+The optional `AIInGames.Planning.PDDL.Validation` assembly validates domains, problems, and
+plans using the external [VAL](https://github.com/KCL-Planning/VAL) tool. It is gated behind
+the `ENABLE_VALIDATION` compile symbol so it is only included when you opt in.
+
+- **.NET:** reference the `PDDLParser.Validation` project/package. It is built with
+  `ENABLE_VALIDATION` defined by default; disable with `-p:EnableValidation=false`.
+- **Unity:** add `ENABLE_VALIDATION` to Project Settings > Player > Scripting Define Symbols.
+  The validation assembly only compiles when the define is present.
+
+```csharp
+using AIInGames.Planning.PDDL.Validation;
+
+var validator = new ValPlanValidator();
+
+// Validate a domain against a problem (type-checking, predicate arities, goal well-formedness)
+ValidationResult result = validator.ValidateDomainAndProblem(domainPddl, problemPddl);
+
+// Validate a plan (one grounded action per line: "(action arg1 arg2)")
+ValidationResult planResult = validator.ValidatePlan(domainPddl, problemPddl, planPddl);
+
+if (planResult.BinaryMissing)
+    Console.WriteLine("VAL binary not available for this platform.");
+else if (planResult.IsValid)
+    Console.WriteLine("Plan is valid.");
+else
+    foreach (var error in planResult.Errors)
+        Console.WriteLine(error);
+```
+
+Overloads accepting parsed `IDomain`/`IProblem` are also provided (they serialize via
+`ToPddl()`). The package bundles the Windows (`win64`) VAL binary; see
+`Binaries/BUILD.md` for building the Linux and macOS binaries. The validator runs VAL as an
+external process, so it requires a platform that supports `Process.Start` (desktop/editor;
+not IL2CPP/console player builds).
+
 ## Supported PDDL Features
 
 - STRIPS (basic actions, preconditions, effects)

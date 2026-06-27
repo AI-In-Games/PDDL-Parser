@@ -4,6 +4,9 @@ All notable changes to this package will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+- Optional plan and domain validation via the external VAL tool, gated behind the `ENABLE_VALIDATION` scripting define symbol. Add `ENABLE_VALIDATION` to Scripting Define Symbols to enable the `AIInGames.Planning.PDDL.Validation` assembly.
+
 ## [0.1.0] - 2026-06-21
 
 ### Added

@@ -1,0 +1,18 @@
+{
+    "name": "AIInGames.Planning.PDDL.Validation",
+    "rootNamespace": "AIInGames.Planning.PDDL.Validation",
+    "references": [
+        "AIInGames.Planning.PDDL"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "ENABLE_VALIDATION"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

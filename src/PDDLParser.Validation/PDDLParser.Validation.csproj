@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <!-- Validation is opt-in. Enabled by default for the .NET build; turn off with -p:EnableValidation=false -->
+    <EnableValidation Condition="'$(EnableValidation)' == ''">true</EnableValidation>
+    <DefineConstants Condition="'$(EnableValidation)' == 'true'">$(DefineConstants);ENABLE_VALIDATION</DefineConstants>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>AIInGames.Planning.PDDL.Validation</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Marek Marchlewicz</Authors>
+    <Company>AI In Games</Company>
+    <Product>PDDL Plan Validation (VAL) for .NET and Unity</Product>
+    <Description>Plan and domain validation for AIInGames.Planning.PDDL using the external VAL tool. Validates PDDL domains, problems, and plans. Gated behind the ENABLE_VALIDATION compile symbol.</Description>
+    <PackageTags>pddl;ai-planning;plan-validation;val;unity;csharp;dotnet</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/AI-In-Games/PDDL-Parser</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AI-In-Games/PDDL-Parser</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>Copyright (c) 2025 AI In Games</Copyright>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PDDLParser\PDDLParser.csproj" />
+  </ItemGroup>
+
+  <!-- Ship the VAL binaries alongside the assembly and in the NuGet package -->
+  <ItemGroup>
+    <None Include="Binaries\**\*">
+      <Pack>true</Pack>
+      <PackagePath>contentFiles\any\any\Binaries\;Binaries\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
