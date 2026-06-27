@@ -7,50 +7,56 @@ using System.IO;
 namespace AIInGames.Planning.PDDL.Validation
 {
     /// <summary>
-    /// Runs VAL's Validate executable against PDDL domain, problem, and plan files.
+    /// Validates PDDL domains, problems, and plans using the external VAL tool.
+    /// The VAL binary is located automatically from within the package.
     /// </summary>
-    public sealed class ValPlanValidator : IPlanValidator
+    public static class ValPlanValidator
     {
-        private readonly IValidateBinaryLocator _binaryLocator;
+        private static readonly IValidateBinaryLocator DefaultLocator = new DefaultValidateBinaryLocator();
 
-        public ValPlanValidator() : this(new DefaultValidateBinaryLocator()) { }
-
-        public ValPlanValidator(IValidateBinaryLocator binaryLocator)
+        public static ValidationResult ValidateDomainAndProblem(string domainPddl, string problemPddl)
         {
-            _binaryLocator = binaryLocator ?? throw new ArgumentNullException(nameof(binaryLocator));
+            return ValidateDomainAndProblem(domainPddl, problemPddl, DefaultLocator);
         }
 
-        public ValidationResult ValidateDomainAndProblem(string domainPddl, string problemPddl)
-        {
-            return RunWithTempFiles(
-                new[] { domainPddl, problemPddl },
-                files => $"-v \"{files[0]}\" \"{files[1]}\"");
-        }
-
-        public ValidationResult ValidateDomainAndProblem(IDomain domain, IProblem problem)
+        public static ValidationResult ValidateDomainAndProblem(IDomain domain, IProblem problem)
         {
             if (domain == null) throw new ArgumentNullException(nameof(domain));
             if (problem == null) throw new ArgumentNullException(nameof(problem));
             return ValidateDomainAndProblem(domain.ToPddl(), problem.ToPddl());
         }
 
-        public ValidationResult ValidatePlan(string domainPddl, string problemPddl, string planPddl)
+        public static ValidationResult ValidatePlan(string domainPddl, string problemPddl, string planPddl)
         {
-            return RunWithTempFiles(
-                new[] { domainPddl, problemPddl, planPddl },
-                files => $"-v \"{files[0]}\" \"{files[1]}\" \"{files[2]}\"");
+            return ValidatePlan(domainPddl, problemPddl, planPddl, DefaultLocator);
         }
 
-        public ValidationResult ValidatePlan(IDomain domain, IProblem problem, string planPddl)
+        public static ValidationResult ValidatePlan(IDomain domain, IProblem problem, string planPddl)
         {
             if (domain == null) throw new ArgumentNullException(nameof(domain));
             if (problem == null) throw new ArgumentNullException(nameof(problem));
             return ValidatePlan(domain.ToPddl(), problem.ToPddl(), planPddl);
         }
 
-        private ValidationResult RunWithTempFiles(string[] contents, Func<string[], string> buildArguments)
+        // Test seam: lets tests substitute the binary locator without exposing it publicly.
+        internal static ValidationResult ValidateDomainAndProblem(
+            string domainPddl, string problemPddl, IValidateBinaryLocator locator)
         {
-            string? exePath = _binaryLocator.FindValidateExecutable();
+            return Run(locator, new[] { domainPddl, problemPddl },
+                files => $"-v \"{files[0]}\" \"{files[1]}\"");
+        }
+
+        internal static ValidationResult ValidatePlan(
+            string domainPddl, string problemPddl, string planPddl, IValidateBinaryLocator locator)
+        {
+            return Run(locator, new[] { domainPddl, problemPddl, planPddl },
+                files => $"-v \"{files[0]}\" \"{files[1]}\" \"{files[2]}\"");
+        }
+
+        private static ValidationResult Run(
+            IValidateBinaryLocator locator, string[] contents, Func<string[], string> buildArguments)
+        {
+            string? exePath = locator.FindValidateExecutable();
             if (exePath == null)
                 return ValidationResult.NoBinary();
 

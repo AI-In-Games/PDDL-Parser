@@ -29,6 +29,10 @@
     <ProjectReference Include="..\PDDLParser\PDDLParser.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="PDDLParser.Tests" />
+  </ItemGroup>
+
   <!-- Ship the VAL binaries alongside the assembly and in the NuGet package -->
   <ItemGroup>
     <None Include="Binaries\**\*">

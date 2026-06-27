@@ -32,20 +32,20 @@ namespace AIInGames.Planning.PDDL.Validation
 
         private ValidationResult() { }
 
-        public static ValidationResult Valid(string rawOutput) => new ValidationResult
+        internal static ValidationResult Valid(string rawOutput) => new ValidationResult
         {
             IsValid = true,
             RawOutput = rawOutput
         };
 
-        public static ValidationResult Invalid(IReadOnlyList<string> errors, string rawOutput) => new ValidationResult
+        internal static ValidationResult Invalid(IReadOnlyList<string> errors, string rawOutput) => new ValidationResult
         {
             IsValid = false,
             Errors = errors,
             RawOutput = rawOutput
         };
 
-        public static ValidationResult NoBinary() => new ValidationResult
+        internal static ValidationResult NoBinary() => new ValidationResult
         {
             BinaryMissing = true,
             IsValid = false,

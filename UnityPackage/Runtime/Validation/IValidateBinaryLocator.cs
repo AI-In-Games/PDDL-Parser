@@ -3,10 +3,9 @@ namespace AIInGames.Planning.PDDL.Validation
 {
     /// <summary>
     /// Locates the VAL "Validate" executable for the current platform.
-    /// Abstracted so the validator can run on plain .NET, in the Unity Editor, and in
-    /// Unity player builds without depending on any one host's package APIs.
+    /// Internal package detail; consumers use <see cref="ValPlanValidator"/>.
     /// </summary>
-    public interface IValidateBinaryLocator
+    internal interface IValidateBinaryLocator
     {
         /// <summary>
         /// Returns the absolute path to the Validate executable, or null if it cannot be found.

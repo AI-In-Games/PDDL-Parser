@@ -62,8 +62,6 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         // Precondition (at hero camp) is false in the initial state
         private const string InvalidPlan = "(move hero camp base)";
 
-        private static IPlanValidator NewValidator() => new ValPlanValidator();
-
         private static void SkipIfBinaryMissing(ValidationResult result)
         {
             if (result.BinaryMissing)
@@ -73,7 +71,7 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         [Test]
         public void ValidateDomainAndProblem_ValidDomainAndProblem_ReturnsValid()
         {
-            ValidationResult result = NewValidator().ValidateDomainAndProblem(ValidDomain, ValidProblem);
+            ValidationResult result = ValPlanValidator.ValidateDomainAndProblem(ValidDomain, ValidProblem);
 
             SkipIfBinaryMissing(result);
             Assert.IsTrue(result.IsValid, $"Expected valid but got errors:\n{string.Join("\n", result.Errors)}");
@@ -82,7 +80,7 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         [Test]
         public void ValidateDomainAndProblem_DomainWithUndefinedType_ReturnsInvalid()
         {
-            ValidationResult result = NewValidator().ValidateDomainAndProblem(DomainWithTypeError, MinimalProblemForBadDomain);
+            ValidationResult result = ValPlanValidator.ValidateDomainAndProblem(DomainWithTypeError, MinimalProblemForBadDomain);
 
             SkipIfBinaryMissing(result);
             Assert.IsFalse(result.IsValid, "Domain with undefined type should fail validation");
@@ -92,7 +90,7 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         [Test]
         public void ValidateDomainAndProblem_ValidDomain_RawOutputIsNotEmpty()
         {
-            ValidationResult result = NewValidator().ValidateDomainAndProblem(ValidDomain, ValidProblem);
+            ValidationResult result = ValPlanValidator.ValidateDomainAndProblem(ValidDomain, ValidProblem);
 
             SkipIfBinaryMissing(result);
             Assert.IsNotNull(result.RawOutput);
@@ -102,7 +100,7 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         [Test]
         public void ValidatePlan_ValidPlan_ReturnsValid()
         {
-            ValidationResult result = NewValidator().ValidatePlan(ValidDomain, ValidProblem, ValidPlan);
+            ValidationResult result = ValPlanValidator.ValidatePlan(ValidDomain, ValidProblem, ValidPlan);
 
             SkipIfBinaryMissing(result);
             Assert.IsTrue(result.IsValid, $"Expected valid but got:\n{result.RawOutput}");
@@ -111,7 +109,7 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         [Test]
         public void ValidatePlan_PlanWithUnsatisfiedPrecondition_ReturnsInvalid()
         {
-            ValidationResult result = NewValidator().ValidatePlan(ValidDomain, ValidProblem, InvalidPlan);
+            ValidationResult result = ValPlanValidator.ValidatePlan(ValidDomain, ValidProblem, InvalidPlan);
 
             SkipIfBinaryMissing(result);
             Assert.IsFalse(result.IsValid, "Plan with unsatisfied precondition should fail validation");
@@ -120,7 +118,7 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         [Test]
         public void ValidatePlan_RawOutputContainsPlanDetails()
         {
-            ValidationResult result = NewValidator().ValidatePlan(ValidDomain, ValidProblem, ValidPlan);
+            ValidationResult result = ValPlanValidator.ValidatePlan(ValidDomain, ValidProblem, ValidPlan);
 
             SkipIfBinaryMissing(result);
             Assert.IsTrue(result.RawOutput.Contains("Plan valid"), $"Expected 'Plan valid' in output:\n{result.RawOutput}");
@@ -135,7 +133,7 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
             Assert.That(domain, Is.Not.Null);
             Assert.That(problem, Is.Not.Null);
 
-            ValidationResult result = NewValidator().ValidateDomainAndProblem(domain!, problem!);
+            ValidationResult result = ValPlanValidator.ValidateDomainAndProblem(domain!, problem!);
 
             SkipIfBinaryMissing(result);
             Assert.IsTrue(result.IsValid, $"Expected valid but got errors:\n{string.Join("\n", result.Errors)}");
@@ -144,9 +142,8 @@ namespace AIInGames.Planning.PDDL.Tests.Validation
         [Test]
         public void ValidateDomainAndProblem_BinaryNotFound_ReportsBinaryMissing()
         {
-            var validator = new ValPlanValidator(new MissingBinaryLocator());
-
-            ValidationResult result = validator.ValidateDomainAndProblem(ValidDomain, ValidProblem);
+            ValidationResult result = ValPlanValidator.ValidateDomainAndProblem(
+                ValidDomain, ValidProblem, new MissingBinaryLocator());
 
             Assert.IsTrue(result.BinaryMissing, "Should report the binary as missing");
             Assert.IsFalse(result.IsValid);

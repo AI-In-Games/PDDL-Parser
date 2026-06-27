@@ -14,5 +14,5 @@
         "ENABLE_VALIDATION"
     ],
     "versionDefines": [],
-    "noEngineReferences": true
+    "noEngineReferences": false
 }
